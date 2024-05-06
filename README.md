@@ -19,9 +19,3 @@ A simple tasks tracker
 -   Left form for adding new tasks
 -   Right Side has a Stack of Todos
 -   Bottom should have a Dashboard for productivity analysis and stats
-
-# Learnings
-
--   css modules
--   React Ctx + Reducer
--   configure autoprefixer

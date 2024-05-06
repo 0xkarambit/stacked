@@ -1,0 +1,21 @@
+.form {
+	display: flex;
+	gap: 1rem;
+	justify-content: space-evenly;
+
+	border: 2px solid currentColor;
+
+	text-align: center;
+	font-size: 2rem;
+}
+
+.form > input[type="button"] {
+	padding: 0.5rem;
+	font-size: 2.5rem;
+}
+
+.form > input[type="text"] {
+	font-size: 2.5rem;
+	padding: 0.5rem;
+	width: 100%;
+}

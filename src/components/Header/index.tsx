@@ -16,6 +16,9 @@ function Header() {
 	return (
 		<header className={css.header}>
 			<pre>{HEADER_TEXT}</pre>
+			<p>
+				<i>Tasks Management tool</i>
+			</p>
 		</header>
 	);
 }
