@@ -4,8 +4,6 @@ A simple tasks tracker
 
 # Todo
 
--   Learn snippets to be fast in React
--   Learn Animation using Gsap or ReactFramer
 -   Form 3 Modes
     -   Voice Mode
     -   Keyboard form
@@ -22,8 +20,3 @@ A simple tasks tracker
 -   Settings
 -   Theme Btn + Make your own theme
 -   Make the screen dim when the user is typing a task in input
-
-# Extensions
-
--   TS React snippets
--
