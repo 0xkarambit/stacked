@@ -1,6 +1,12 @@
 .header {
+	display: flex;
+	justify-content: center;
+
 	text-align: center;
 	color: green;
 	margin-bottom: 1.5rem;
-	font-size: 1.19em;
+}
+
+.main {
+	font-size: 0.7rem;
 }

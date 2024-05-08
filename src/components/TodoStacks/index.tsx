@@ -1,10 +1,18 @@
-const stack = [1, 2, 3, 4, 5].map(n => `task ${n}`);
+import {FC} from "react";
 
-const TodoStacks = () => {
-	const stackView = stack.map(s => <li>{s}</li>);
-	return <div>{stackView}</div>;
+import style from "./TodoStacks.module.css";
+import {Task} from "../../types/task";
+
+interface props {
+	tasks: Task[];
+}
+
+// const TodoStacks = ({notes: Note}) => {
+export const TaskStacks: FC<props> = ({tasks}) => {
+	const stackView = tasks.map(s => <li>{s.text}</li>);
+	return <div className={style.taskStacks}>{stackView}</div>;
 };
 
-TodoStacks.propTypes = {};
-
-export default TodoStacks;
+export const Stack = () => {
+	return <div>Stack</div>;
+};

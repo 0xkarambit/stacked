@@ -1,0 +1,13 @@
+/* todo: meh switch to sass/less or something man  */
+.taskStacks {
+	display: grid;
+	grid-auto-columns: max(fit-content, 25%);
+	grid-template-rows: 1fr;
+	margin-top: 1rem;
+	padding: 0.4rem;
+}
+
+.taskStacks > li {
+	font-size: 1.1rem;
+	list-style-type: none;
+}

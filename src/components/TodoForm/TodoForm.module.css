@@ -2,6 +2,8 @@
 	display: flex;
 	gap: 1rem;
 	justify-content: space-evenly;
+	max-width: 800px;
+	margin: 0 auto;
 
 	border: 2px solid currentColor;
 
@@ -9,13 +11,13 @@
 	font-size: 2rem;
 }
 
-.form > input[type="button"] {
+.form > input {
+	accent-color: var(--accent);
+	font-size: 1.5rem;
 	padding: 0.5rem;
-	font-size: 2.5rem;
+	padding: 0.5rem;
 }
 
 .form > input[type="text"] {
-	font-size: 2.5rem;
-	padding: 0.5rem;
 	width: 100%;
 }

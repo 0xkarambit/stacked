@@ -15,10 +15,10 @@ function Header() {
 
 	return (
 		<header className={css.header}>
-			<pre>{HEADER_TEXT}</pre>
-			<p>
+			<div>
+				<pre className={css.main}>{HEADER_TEXT}</pre>
 				<i>Tasks Management tool</i>
-			</p>
+			</div>
 		</header>
 	);
 }

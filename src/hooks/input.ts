@@ -25,7 +25,7 @@ export function useSingleInput(
 		setValue(e.target.value);
 	};
 
-	const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	const submitOnEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key == "Enter") {
 			onSubmit(value);
 			e.preventDefault();
@@ -44,5 +44,5 @@ export function useSingleInput(
 		}
 	};
 
-	return [value, setValue, handleChange, handleInput];
+	return [value, setValue, handleChange, submitOnEnter];
 }
