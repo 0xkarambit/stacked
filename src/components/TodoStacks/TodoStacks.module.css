@@ -1,14 +1,31 @@
 /* todo: meh switch to sass/less or something man  */
 .taskStacks {
-	display: grid;
+	/* display: grid;
 	gap: 2rem;
-	grid-auto-columns: max(fit-content, 25%);
-	grid-template-rows: 1fr;
+	grid-auto-columns: min(fit-content, 25%);
+	grid-auto-flow: column;
+	grid-template-rows: 1fr; */
+	display: flex;
+	gap: 2rem;
+	flex-wrap: wrap;
 	margin-top: 1rem;
 	padding: 0.4rem;
 }
 
 .stack {
+	border: 2px dashed var(--green);
+	padding: 0.6rem 1rem;
 	font-size: 1.1rem;
 	list-style-type: none;
+	cursor: pointer;
+}
+
+.stack input {
+	float: right;
+}
+
+.addStack {
+	font-size: 1.5rem;
+	border: 5px solid var(--green);
+	border-radius: 80%;
 }

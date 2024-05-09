@@ -1,5 +1,5 @@
 import styles from "./styles.module.css";
-import Header from "./components/Header";
+import {Header} from "./components/Header";
 import {TodoForm} from "./components/TodoForm";
 import {TaskStacks} from "./components/TodoStacks";
 import {useReducer} from "react";
@@ -12,7 +12,32 @@ const initialStackState: StacksStateI = {
 		{
 			name: "Stack 0",
 			done: false,
-			tasks: []
+			tasks: [
+				{
+					id: 0,
+					text: "Task 1",
+					tags: [],
+					isDone: false
+				},
+				{
+					id: 1,
+					text: "task 2",
+					tags: [],
+					isDone: false
+				}
+			]
+		},
+		{
+			name: "Stack 1",
+			done: false,
+			tasks: [
+				{
+					id: 0,
+					text: "Hello World",
+					tags: [],
+					isDone: false
+				}
+			]
 		}
 	],
 	currentStack: undefined

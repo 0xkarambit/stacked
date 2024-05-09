@@ -18,7 +18,15 @@ export const TaskStacks: FC<props> = ({stackState, remove}) => {
 			stack={stack}
 		/>
 	));
-	return <div className={style.taskStacks}>{stackView}</div>;
+	return (
+		<div className={style.taskStacks}>
+			{stackView}
+			<div>
+				{/* Todo: style + add func */}
+				<button className={style.addStack}>+</button>
+			</div>
+		</div>
+	);
 };
 
 interface stackProps {
@@ -30,6 +38,8 @@ interface stackProps {
 
 const Stack: FC<stackProps> = ({name, stack, stackIdx, remove}) => {
 	return (
+		// todo: change the active tasksStack when you click this !
+		// active stack should have a solid bright green border, other should have a lower opacity
 		<div data-name={name} className={style.stack}>
 			{stack.tasks.map((task, taskIdx) => (
 				// would this make tooo many functions ..... :hmmm

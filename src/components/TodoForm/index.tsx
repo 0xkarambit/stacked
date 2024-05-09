@@ -18,6 +18,7 @@ export const TodoForm: FC<props> = ({addTask}) => {
 		const tags = extract_tags(text);
 		addTask({
 			// * Apparently a weird bug happens when i use `id` as the key lmao
+			// why does this happend :hmm
 			id: Math.random() * 1000,
 			isDone: false,
 			tags,
