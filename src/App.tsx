@@ -3,36 +3,71 @@ import Header from "./components/Header";
 import {TodoForm} from "./components/TodoForm";
 import {TaskStacks} from "./components/TodoStacks";
 import {useReducer} from "react";
-import {Task, TaskReducer} from "./types/task";
+import type {TaskI, StacksStateI, TaskAction, StackReducer} from "./types/task";
 
 // todo: dont chase perfection lmao
+// can i make this a class....
+const initialStackState: StacksStateI = {
+	stacks: [
+		{
+			name: "Stack 0",
+			done: false,
+			tasks: []
+		}
+	],
+	currentStack: undefined
+};
+initialStackState.currentStack = initialStackState.stacks[0];
+
+const stackStateReducer = (
+	prevStackState: StacksStateI,
+	action: TaskAction
+) => {
+	const {type} = action;
+	const copy = {...prevStackState};
+	switch (type) {
+		case "Add":
+			copy.currentStack?.tasks.push(action.task);
+			break;
+
+		case "Done": {
+			const {stackIdx, taskIdx} = action;
+			copy.stacks[stackIdx].tasks.splice(taskIdx, 1);
+			break;
+		}
+		default:
+			break;
+	}
+	return copy;
+};
 
 function App() {
-	const [tasks, tasksDispatch] = useReducer<TaskReducer>((tasks, action) => {
-		switch (action.type) {
-			case "Add":
-				return [...tasks, action.task];
+	const [stackState, stackDispatch] = useReducer<StackReducer>(
+		stackStateReducer,
+		initialStackState
+	);
 
-			default:
-				return tasks;
-				break;
-		}
-	}, []);
+	const removeTask = (t: number, stackIdx: number) => {
+		stackDispatch({
+			type: "Done",
+			taskIdx: t,
+			stackIdx
+		});
+	};
 
-	const addTask = (t: Task) =>
-		tasksDispatch({
+	const addTask = (t: TaskI) => {
+		stackDispatch({
 			type: "Add",
 			task: t
 		});
+	};
 
-	// Routing Info
 	return (
 		<>
 			<Header></Header>
-			{/* This could have just been a div :hmm */}
 			<div className={styles.layoutContainer}>
-				<TodoForm addTask={addTask}></TodoForm>
-				<TaskStacks tasks={tasks}></TaskStacks>
+				<TodoForm addTask={addTask} />
+				<TaskStacks remove={removeTask} stackState={stackState} />
 			</div>
 		</>
 	);

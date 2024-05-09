@@ -9,15 +9,47 @@
 
 	text-align: center;
 	font-size: 2rem;
+	/* For the Blinking Solid Cursor */
+	position: relative;
 }
 
 .form > input {
-	accent-color: var(--accent);
-	font-size: 1.5rem;
-	padding: 0.5rem;
+	appearance: none;
+	border: none;
+
+	color: var(--green);
+	accent-color: var(--green);
+	caret-shape: block;
+	caret-color: currentColor;
+	font-size: 1.3rem;
 	padding: 0.5rem;
 }
 
 .form > input[type="text"] {
 	width: 100%;
+}
+
+.cursor {
+	position: absolute;
+	top: -0.3rem;
+	left: calc(var(--offset) * 1rem);
+	color: var(--green);
+	width: 1rem;
+	height: 1rem;
+	z-index: 100;
+	opacity: 1;
+	animation: blink 1s infinite;
+}
+
+/* we dont want it to move gradually, we want to have to toggle */
+@keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

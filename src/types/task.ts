@@ -1,9 +1,23 @@
-export interface Task {
+export interface TaskI {
 	id: number;
 	text: string;
 	tags: string[];
 	isDone: boolean;
 }
 
-export type TaskAction = {type: "Add"; task: Task} | {type: "Done"; task: Task};
-export type TaskReducer = (a: Task[], b: TaskAction) => Task[];
+export interface StackI {
+	name: string;
+	tasks: TaskI[];
+	done: boolean;
+}
+
+export type StacksStateI = {
+	currentStack: StackI | undefined;
+	stacks: StackI[];
+};
+
+export type TaskAction =
+	| {type: "Add"; task: TaskI}
+	| {type: "Done"; taskIdx: number; stackIdx: number};
+
+export type StackReducer = (a: StacksStateI, b: TaskAction) => StacksStateI;
