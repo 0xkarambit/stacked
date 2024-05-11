@@ -30,7 +30,6 @@ export function useSingleInput(
 			onSubmit(value);
 			e.preventDefault();
 
-			// changing value after submit
 			switch (clearAfterSubmit) {
 				case submitBehaviour.CLEAR:
 					setValue("");

@@ -12,7 +12,7 @@ export interface StackI {
 }
 
 export type StacksStateI = {
-	currentStack: StackI | undefined;
+	currentStackIdx: number;
 	stacks: StackI[];
 };
 

@@ -40,30 +40,64 @@ const initialStackState: StacksStateI = {
 			]
 		}
 	],
-	currentStack: undefined
+	currentStackIdx: 0
 };
-initialStackState.currentStack = initialStackState.stacks[0];
 
-const stackStateReducer = (
-	prevStackState: StacksStateI,
-	action: TaskAction
-) => {
-	const {type} = action;
-	const copy = {...prevStackState};
-	switch (type) {
-		case "Add":
-			copy.currentStack?.tasks.push(action.task);
-			break;
+const stackStateReducer = (state: StacksStateI, action: TaskAction) => {
+	switch (action.type) {
+		case "Add": {
+			// This code does indeed cause 2 times entering of data
+			/* 			const new_state = {
+				...prevStackState,
+				// But the tasks inside stacks still point to the same tasks !!!
+				stacks: [...prevStackState.stacks]
+			};
+			new_state.stacks[new_state.currentStackIdx].tasks.push(action.task);
+
+			return new_state; */
+
+			return {
+				...state,
+				stacks: state.stacks.map((stack, idx) => {
+					return idx !== state.currentStackIdx
+						? stack
+						: {
+								...stack,
+								tasks: [...stack.tasks, action.task]
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+						  };
+				})
+			};
+		}
 
 		case "Done": {
 			const {stackIdx, taskIdx} = action;
-			copy.stacks[stackIdx].tasks.splice(taskIdx, 1);
-			break;
+			return {
+				...state,
+				stacks: state.stacks.map((stack, idx) => {
+					const stackTasks = stack.tasks;
+					return idx !== stackIdx
+						? stack
+						: {
+								...stack,
+								tasks: stackTasks.map((t, i) => {
+									return i !== taskIdx
+										? t
+										: {
+												...t,
+												isDone: true
+												// eslint-disable-next-line no-mixed-spaces-and-tabs
+										  };
+								})
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+						  };
+				})
+			};
 		}
 		default:
 			break;
 	}
-	return copy;
+	return state;
 };
 
 function App() {

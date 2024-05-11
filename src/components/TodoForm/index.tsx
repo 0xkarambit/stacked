@@ -26,24 +26,24 @@ export const TodoForm: FC<props> = ({addTask}) => {
 		});
 	};
 
-	const [title, , handleChange, submitOnEnter] = useSingleInput(
+	const [taskText, , handleChange, submitOnEnter] = useSingleInput(
 		"",
-		onSubmit,
+		onSubmit, // todo: change this
 		submitBehaviour.DEFAULT
 	);
 
 	return (
-		<div className={css.form}>
+		<form className={css.form}>
 			<input
 				type="text"
 				autoFocus
 				placeholder={PLACEHOLDER_TEXT}
-				value={title}
+				value={taskText}
 				onChange={handleChange}
 				onKeyDown={submitOnEnter}
 			/>
 			{/* <Cursor offset={10}></Cursor> */}
-		</div>
+		</form>
 	);
 };
 
