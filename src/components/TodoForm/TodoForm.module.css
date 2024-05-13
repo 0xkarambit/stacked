@@ -4,8 +4,7 @@
 	justify-content: space-evenly;
 	max-width: 800px;
 	margin: 0 auto;
-
-	border: 2px solid currentColor;
+	margin-bottom: 2rem;
 
 	text-align: center;
 	font-size: 2rem;
@@ -17,23 +16,33 @@
 	appearance: none;
 	border: none;
 
-	color: var(--green);
-	accent-color: var(--green);
+	color: var(--primary);
+	accent-color: var(--primary);
 	caret-shape: block;
 	caret-color: currentColor;
 	font-size: 1.3rem;
 	padding: 0.5rem;
+
+	line-height: 1.5;
+	background-color: var(--bg-color);
+	background-clip: padding-box;
+	border: 0.2rem solid #55de5c;
+}
+
+.form > input:focus {
+	box-shadow: 0 0 15px 0.2em rgba(64, 218, 72, 0.25);
 }
 
 .form > input[type="text"] {
 	width: 100%;
+	outline: none;
 }
 
 .cursor {
 	position: absolute;
 	top: -0.3rem;
 	left: calc(var(--offset) * 1rem);
-	color: var(--green);
+	color: var(--primary);
 	width: 1rem;
 	height: 1rem;
 	z-index: 100;

@@ -1,31 +1,49 @@
 /* todo: meh switch to sass/less or something man  */
-.taskStacks {
-	/* display: grid;
+.taskStacksFlex {
+	display: grid;
 	gap: 2rem;
-	grid-auto-columns: min(fit-content, 25%);
+	grid-auto-columns: minmax(min-content, 25vw);
 	grid-auto-flow: column;
-	grid-template-rows: 1fr; */
-	display: flex;
+	grid-template-rows: 1fr;
+	/* display: flex;
 	gap: 2rem;
-	flex-wrap: wrap;
+	flex-wrap: wrap; */
 	margin-top: 1rem;
 	padding: 0.4rem;
 }
 
 .stack {
-	border: 2px dashed var(--green);
+	/* height: min(100vh, 600px); */
+	display: flex;
+	flex-direction: column;
+	justify-items: start;
+
+	border: 2px solid var(--border);
 	padding: 0.6rem 1rem;
 	font-size: 1.1rem;
 	list-style-type: none;
 	cursor: pointer;
+
+	li {
+		display: flex;
+		align-items: center;
+		max-width: 100%;
+		text-overflow: ellipsis;
+	}
+
+	input[type="checked"] {
+		font-size: 2rem;
+		float: right;
+	}
+
+	p {
+		color: green;
+	}
 }
 
-.stack input {
-	float: right;
-}
-
-.addStack {
-	font-size: 1.5rem;
-	border: 5px solid var(--green);
-	border-radius: 80%;
+.stack[data-selected="true"] {
+	border: 2px solid var(--accent);
+	p {
+		color: var(--accent);
+	}
 }

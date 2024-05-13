@@ -1,5 +1,5 @@
 import {submitBehaviour, useSingleInput} from "../../hooks/input";
-import {type FC} from "react";
+import {useRef, type FC} from "react";
 import {TaskI} from "../../types/task";
 
 import css from "./TodoForm.module.css";
@@ -14,6 +14,7 @@ interface props {
 export const TodoForm: FC<props> = ({addTask}) => {
 	// todo: use a useRef to abstract away handle* functions
 
+	const inputElm = useRef<HTMLInputElement>(null);
 	const onSubmit = (text: string) => {
 		const tags = extract_tags(text);
 		addTask({
@@ -39,6 +40,7 @@ export const TodoForm: FC<props> = ({addTask}) => {
 				autoFocus
 				placeholder={PLACEHOLDER_TEXT}
 				value={taskText}
+				ref={inputElm}
 				onChange={handleChange}
 				onKeyDown={submitOnEnter}
 			/>

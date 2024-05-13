@@ -8,7 +8,7 @@ export interface TaskI {
 export interface StackI {
 	name: string;
 	tasks: TaskI[];
-	done: boolean;
+	isDone: boolean;
 }
 
 export type StacksStateI = {

@@ -4,6 +4,7 @@ import {TodoForm} from "./components/TodoForm";
 import {TaskStacks} from "./components/TodoStacks";
 import {useReducer} from "react";
 import type {TaskI, StacksStateI, TaskAction, StackReducer} from "./types/task";
+import {produce} from "immer";
 
 // todo: dont chase perfection lmao
 // can i make this a class....
@@ -11,7 +12,7 @@ const initialStackState: StacksStateI = {
 	stacks: [
 		{
 			name: "Stack 0",
-			done: false,
+			isDone: false,
 			tasks: [
 				{
 					id: 0,
@@ -29,7 +30,7 @@ const initialStackState: StacksStateI = {
 		},
 		{
 			name: "Stack 1",
-			done: false,
+			isDone: false,
 			tasks: [
 				{
 					id: 0,
@@ -44,59 +45,20 @@ const initialStackState: StacksStateI = {
 };
 
 const stackStateReducer = (state: StacksStateI, action: TaskAction) => {
-	switch (action.type) {
-		case "Add": {
-			// This code does indeed cause 2 times entering of data
-			/* 			const new_state = {
-				...prevStackState,
-				// But the tasks inside stacks still point to the same tasks !!!
-				stacks: [...prevStackState.stacks]
-			};
-			new_state.stacks[new_state.currentStackIdx].tasks.push(action.task);
-
-			return new_state; */
-
-			return {
-				...state,
-				stacks: state.stacks.map((stack, idx) => {
-					return idx !== state.currentStackIdx
-						? stack
-						: {
-								...stack,
-								tasks: [...stack.tasks, action.task]
-								// eslint-disable-next-line no-mixed-spaces-and-tabs
-						  };
-				})
-			};
-		}
-
-		case "Done": {
-			const {stackIdx, taskIdx} = action;
-			return {
-				...state,
-				stacks: state.stacks.map((stack, idx) => {
-					const stackTasks = stack.tasks;
-					return idx !== stackIdx
-						? stack
-						: {
-								...stack,
-								tasks: stackTasks.map((t, i) => {
-									return i !== taskIdx
-										? t
-										: {
-												...t,
-												isDone: true
-												// eslint-disable-next-line no-mixed-spaces-and-tabs
-										  };
-								})
-								// eslint-disable-next-line no-mixed-spaces-and-tabs
-						  };
-				})
-			};
-		}
-		default:
-			break;
+	if (action.type == "Add") {
+		return produce(state, draft => {
+			draft.stacks[draft.currentStackIdx].tasks.push(action.task);
+		});
+	} else if (action.type == "Done") {
+		const {stackIdx, taskIdx} = action;
+		return produce(state, draft => {
+			draft.stacks[stackIdx].tasks[taskIdx].isDone = true;
+			if (draft.stacks[stackIdx].tasks.length == 0) {
+				draft.stacks[stackIdx].isDone = true;
+			}
+		});
 	}
+	// just for ts to shut up lol
 	return state;
 };
 
