@@ -1,6 +1,6 @@
 .form {
 	display: flex;
-	gap: 1rem;
+	gap: 0.5rem;
 	justify-content: space-evenly;
 	max-width: 800px;
 	margin: 0 auto;
@@ -10,32 +10,44 @@
 	font-size: 2rem;
 	/* For the Blinking Solid Cursor */
 	position: relative;
-}
 
-.form > input {
-	appearance: none;
-	border: none;
+	/* 	select {
+		background-color: var(--bg-color);
+		padding: 1rem;
+		font-size: 1.1rem;
+		color: var(--accent);
+		outline: none;
+		border: var(--border);
+	} */
 
-	color: var(--primary);
-	accent-color: var(--primary);
-	caret-shape: block;
-	caret-color: currentColor;
-	font-size: 1.3rem;
-	padding: 0.5rem;
+	input {
+		appearance: none;
+		border: none;
 
-	line-height: 1.5;
-	background-color: var(--bg-color);
-	background-clip: padding-box;
-	border: 0.2rem solid #55de5c;
-}
+		color: var(--primary);
+		accent-color: var(--primary);
+		caret-shape: block;
+		caret-color: currentColor;
+		font-size: 1.3rem;
+		padding: 0.5rem;
 
-.form > input:focus {
-	box-shadow: 0 0 15px 0.2em rgba(64, 218, 72, 0.25);
-}
+		line-height: 1.5;
+		background-color: var(--bg-color);
+		background-clip: padding-box;
+		border: 0.2rem solid #55de5c;
+	}
 
-.form > input[type="text"] {
-	width: 100%;
-	outline: none;
+	input::placeholder {
+		color: var(--accent);
+	}
+
+	input:focus {
+		box-shadow: 0 0 15px 0.2em rgba(64, 218, 72, 0.25);
+	}
+	input[type="text"] {
+		width: 100%;
+		outline: none;
+	}
 }
 
 .cursor {

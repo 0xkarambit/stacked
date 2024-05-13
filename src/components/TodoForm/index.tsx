@@ -1,18 +1,17 @@
 import {submitBehaviour, useSingleInput} from "../../hooks/input";
 import {useRef, type FC} from "react";
-import {TaskI} from "../../types/task";
 
 import css from "./TodoForm.module.css";
 import {extract_tags} from "../../utils/tasks";
+import {useStackState} from "../../stores/stacks";
 
 const PLACEHOLDER_TEXT = "Enter your task ! Press Enter to submit.";
 
-interface props {
-	addTask: (t: TaskI) => void;
-}
+interface props {}
 
-export const TodoForm: FC<props> = ({addTask}) => {
+export const TodoForm: FC<props> = () => {
 	// todo: use a useRef to abstract away handle* functions
+	const addTask = useStackState(s => s.addTask);
 
 	const inputElm = useRef<HTMLInputElement>(null);
 	const onSubmit = (text: string) => {
@@ -34,7 +33,12 @@ export const TodoForm: FC<props> = ({addTask}) => {
 	);
 
 	return (
-		<form className={css.form}>
+		<div className={css.form}>
+			{/* <select name="selected-stack">
+				<option value="Stack 0" selected>
+					Stack 0
+				</option>
+			</select> */}
 			<input
 				type="text"
 				autoFocus
@@ -45,7 +49,7 @@ export const TodoForm: FC<props> = ({addTask}) => {
 				onKeyDown={submitOnEnter}
 			/>
 			{/* <Cursor offset={10}></Cursor> */}
-		</form>
+		</div>
 	);
 };
 

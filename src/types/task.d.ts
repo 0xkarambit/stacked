@@ -16,6 +16,13 @@ export type StacksStateI = {
 	stacks: StackI[];
 };
 
+export type StackMethodsI = {
+	addTask: (task: TaskI) => void;
+	markTaskDone: (stackIdx: number, taskIdx: number) => void;
+	changeCurrentStackIdx: (stackIdx: number) => void;
+	addStack: (name: string) => void;
+};
+
 export type TaskAction =
 	| {type: "Add"; task: TaskI}
 	| {type: "Done"; taskIdx: number; stackIdx: number};

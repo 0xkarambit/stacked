@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {useStackState} from "../stores/stacks";
 
 type useInputReturn = [
 	string,
@@ -19,6 +20,7 @@ export function useSingleInput(
 	clearAfterSubmit?: submitBehaviour
 ): useInputReturn {
 	const [value, setValue] = useState(defaultValue);
+	const addStack = useStackState(s => s.addStack);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault();
@@ -26,9 +28,16 @@ export function useSingleInput(
 	};
 
 	const submitOnEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key == "Enter") {
-			onSubmit(value);
+		if (value.trim() == "") return;
+		// TODO: fix not working
+		if (e.ctrlKey && e.key == "n") {
 			e.preventDefault();
+			addStack("Name ehjdjas");
+			return;
+		}
+		if (e.key == "Enter") {
+			e.preventDefault();
+			onSubmit(value);
 
 			switch (clearAfterSubmit) {
 				case submitBehaviour.CLEAR:

@@ -1,20 +1,20 @@
 import {FC} from "react";
 
 import style from "./TodoStacks.module.css";
-import type {StackI, StacksStateI} from "../../types/task";
+import type {StackI} from "../../types/task";
+import {useStackState} from "../../stores/stacks";
 
-interface props {
-	stackState: StacksStateI;
-	remove: (t: number, stackIdx: number) => void;
-}
+interface props {}
 
-export const TaskStacks: FC<props> = ({stackState, remove}) => {
-	const stackView = stackState.stacks.map((stack, stackIdx) => (
+export const TaskStacks: FC<props> = () => {
+	const [stacks, currentStackIdx] = useStackState(s => [
+		s.stacks,
+		s.currentStackIdx
+	]);
+	const stackView = stacks.map((stack, stackIdx) => (
 		<Stack
-			selected={stackState.currentStackIdx == stackIdx}
+			selected={currentStackIdx == stackIdx}
 			key={stack.name}
-			remove={remove}
-			name={stack.name}
 			stackIdx={stackIdx}
 			stack={stack}
 		/>
@@ -23,27 +23,29 @@ export const TaskStacks: FC<props> = ({stackState, remove}) => {
 };
 
 interface stackProps {
-	name: string;
 	stack: StackI;
 	stackIdx: number;
 	selected: boolean;
-	remove: (t: number, stackIdx: number) => void;
 }
 
-const Stack: FC<stackProps> = ({name, stack, stackIdx, remove, selected}) => {
+const Stack: FC<stackProps> = ({stack, stackIdx, selected}) => {
+	const [changeCurrentStackIdx, remove] = useStackState(s => [
+		s.changeCurrentStackIdx,
+		s.markTaskDone
+	]);
 	return (
-		// todo: change the active tasksStack when you click this !
-		// active stack should have a solid bright green border, other should have a lower opacity
 		<div
 			data-selected={selected}
-			data-name={name}
 			className={style.stack}
-			onClick={() => alert("Hello evernyian")}>
+			onClick={() => changeCurrentStackIdx(stackIdx)}>
 			<p>{stack.name}</p>
 			{stack.tasks.map((task, taskIdx) => (
 				// would this make tooo many functions ..... :hmmm
-				<li onClick={() => remove(taskIdx, stackIdx)} key={taskIdx}>
-					{task.isDone ? <s>{task.text}</s> : task.text}
+				<li
+					onClick={() => remove(taskIdx, stackIdx)}
+					key={taskIdx}
+					title={task.text}>
+					<span data-done={task.isDone}> {task.text}</span>
 					<input
 						type="checkbox"
 						name="isDone"
