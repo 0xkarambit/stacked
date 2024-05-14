@@ -11,6 +11,7 @@
 
 .stack {
 	max-width: 20vw;
+	filter: brightness(0.8);
 	display: flex;
 	flex-direction: column;
 	justify-items: start;
@@ -21,22 +22,40 @@
 	list-style-type: none;
 	cursor: pointer;
 
-	li {
-		display: flex;
-		align-items: center;
-	}
-
-	input[type="checked"] {
-		font-size: 2rem;
-		float: right;
-	}
+	-webkit-transition: 1s -webkit-filter linear;
+	-moz-transition: 1s -moz-filter linear;
+	-moz-transition: 1s filter linear;
+	-ms-transition: 1s -ms-filter linear;
+	-o-transition: 1s -o-filter linear;
+	transition: 1s filter linear, 1s -webkit-filter linear;
+	transition: color, border 0.2s linear;
 
 	p {
 		color: green;
+		margin-bottom: 0.7rem;
+	}
+	li {
+		padding: 0.5rem 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		max-width: min(100%, 360ch);
+		span {
+			word-wrap: break-word;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: min(100%, 180ch);
+			margin-right: 1rem;
+		}
+		input[type="checked"] {
+			font-size: 2rem;
+			float: right;
+		}
 	}
 }
 
 .stack[data-selected="true"] {
+	filter: brightness(1);
 	border: 2px solid var(--accent);
 	p {
 		color: var(--accent);

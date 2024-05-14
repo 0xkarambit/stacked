@@ -1,16 +1,16 @@
 import {FC} from "react";
 
 import style from "./TodoStacks.module.css";
-import type {StackI} from "../../types/task";
-import {useStackState} from "../../stores/stacks";
+import {StackI, TaskI, useStacksState} from "../../stores/stacksState";
 
 interface props {}
 
 export const TaskStacks: FC<props> = () => {
-	const [stacks, currentStackIdx] = useStackState(s => [
+	const [stacks, currentStackIdx] = useStacksState(s => [
 		s.stacks,
 		s.currentStackIdx
 	]);
+
 	const stackView = stacks.map((stack, stackIdx) => (
 		<Stack
 			selected={currentStackIdx == stackIdx}
@@ -19,6 +19,7 @@ export const TaskStacks: FC<props> = () => {
 			stack={stack}
 		/>
 	));
+
 	return <div className={style.taskStacksFlex}>{stackView}</div>;
 };
 
@@ -29,30 +30,56 @@ interface stackProps {
 }
 
 const Stack: FC<stackProps> = ({stack, stackIdx, selected}) => {
-	const [changeCurrentStackIdx, remove] = useStackState(s => [
+	const [changeCurrentStackIdx, markTaskDone] = useStacksState(s => [
 		s.changeCurrentStackIdx,
-		s.markTaskDone
+		s.toggleTaskCompletion
 	]);
+
+	// we can probably write this in a better way
+	const tasksDone = [];
+	const tasksLeft = [];
+	for (const i in stack.tasks) {
+		const t = stack.tasks[i];
+		if (t.isDone) {
+			tasksDone.push(<Task task={t} key={i} />);
+		} else {
+			tasksLeft.push(
+				<Task
+					task={t}
+					key={i}
+					markAsDone={() => {
+						// Yes i write typescript, hmmm
+						markTaskDone(stackIdx, i as unknown as number);
+					}}
+				/>
+			);
+		}
+	}
+
 	return (
 		<div
 			data-selected={selected}
 			className={style.stack}
 			onClick={() => changeCurrentStackIdx(stackIdx)}>
 			<p>{stack.name}</p>
-			{stack.tasks.map((task, taskIdx) => (
-				// would this make tooo many functions ..... :hmmm
-				<li
-					onClick={() => remove(taskIdx, stackIdx)}
-					key={taskIdx}
-					title={task.text}>
-					<span data-done={task.isDone}> {task.text}</span>
-					<input
-						type="checkbox"
-						name="isDone"
-						checked={task.isDone}
-					/>
-				</li>
-			))}
+			{tasksLeft}
+			{tasksDone}
 		</div>
+	);
+};
+
+interface TaskProps {
+	task: TaskI;
+	markAsDone?: () => void;
+}
+
+const TEXT_LIMIT = 180;
+
+const Task: FC<TaskProps> = ({task, markAsDone}) => {
+	const text = task.text.slice(0, TEXT_LIMIT);
+	return (
+		<li onDoubleClick={markAsDone} title={task.text}>
+			<span data-done={task.isDone}>{text}</span>
+		</li>
 	);
 };
