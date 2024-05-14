@@ -5,23 +5,22 @@ import {TaskStacks} from "./components/TodoStacks";
 import {useEffect, useState} from "react";
 
 function App() {
-	const [headerShow, setHeaderState] = useState<boolean>(true);
+	const [headerState, setHeaderState] = useState<boolean>(true);
+	// toggles very fast if i place this inside the useEffect
+	const listener = (e: KeyboardEvent) => {
+		if (e.key === "h" && e.ctrlKey) {
+			e.preventDefault();
+			setHeaderState(s => !s);
+		}
+	};
 	useEffect(() => {
-		const listener = (e: KeyboardEvent) => {
-			console.log(e);
-			if (e.key == "h" && e.ctrlKey) {
-				e.preventDefault();
-				setHeaderState(s => !s);
-			}
-		};
 		document.addEventListener("keydown", listener);
-		return () => {
-			removeEventListener("keydown", listener);
-		};
+		return () => removeEventListener("keydown", listener);
 	}, []);
+
 	return (
 		<>
-			{headerShow && <Header></Header>}
+			{headerState && <Header />}
 			<div className={styles.layoutContainer}>
 				<TodoForm />
 				<TaskStacks />
